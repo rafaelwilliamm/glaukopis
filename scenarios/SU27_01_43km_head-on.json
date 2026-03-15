@@ -1,0 +1,21 @@
+{
+  "scenario_id": "SU27_01_43km_head-on",
+  "description": "Su-27 Flanker approaching head-on from 43km",
+  "random_seed": 42,
+  "radar": {
+    "position": [0, 0, 0]
+  },
+  "threat": {
+    "profile": "Su-27 Flanker",
+    "inject_at_time": 0.0,
+    "initial_position": [43000, 2000, 4000],
+    "velocity": [-400, 50, -20]
+  },
+  "fire_control": {
+    "mode": "automatic"
+  },
+  "simulation": {
+    "max_duration": 200.0,
+    "dt": 0.1
+  }
+}

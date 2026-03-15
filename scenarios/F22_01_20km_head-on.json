@@ -1,0 +1,21 @@
+{
+  "scenario_id": "F35_01_6km_head-on",
+  "description": "F-35 Stealth approaching head-on from 6km — maximum difficulty",
+  "random_seed": 42,
+  "radar": {
+    "position": [0, 0, 0]
+  },
+  "threat": {
+    "profile": "F-35 / F-22 Stealth",
+    "inject_at_time": 0.0,
+    "initial_position": [6000, 1000, 2000],
+    "velocity": [-280, 20, -10]
+  },
+  "fire_control": {
+    "mode": "automatic"
+  },
+  "simulation": {
+    "max_duration": 60.0,
+    "dt": 0.1
+  }
+}

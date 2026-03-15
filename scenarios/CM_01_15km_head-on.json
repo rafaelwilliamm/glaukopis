@@ -1,0 +1,21 @@
+{
+  "scenario_id": "CM_01_18km_head-on",
+  "description": "Cruise Missile approaching head-on from 18km at subsonic speed",
+  "random_seed": 42,
+  "radar": {
+    "position": [0, 0, 0]
+  },
+  "threat": {
+    "profile": "Cruise Missile / DJI Drone",
+    "inject_at_time": 0.0,
+    "initial_position": [18000, 2000, 500],
+    "velocity": [-250, 30, -10]
+  },
+  "fire_control": {
+    "mode": "automatic"
+  },
+  "simulation": {
+    "max_duration": 120.0,
+    "dt": 0.1
+  }
+}

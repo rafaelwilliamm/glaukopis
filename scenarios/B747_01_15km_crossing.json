@@ -1,0 +1,21 @@
+{
+  "scenario_id": "B747_01_60km_crossing",
+  "description": "Boeing 747 commercial airliner crossing — IFF friendly, should NOT be engaged",
+  "random_seed": 42,
+  "radar": {
+    "position": [0, 0, 0]
+  },
+  "threat": {
+    "profile": "Boeing 747",
+    "inject_at_time": 3.0,
+    "initial_position": [60000, 5000, 10000],
+    "velocity": [-220, 20, 0]
+  },
+  "fire_control": {
+    "mode": "automatic"
+  },
+  "simulation": {
+    "max_duration": 300.0,
+    "dt": 0.1
+  }
+}

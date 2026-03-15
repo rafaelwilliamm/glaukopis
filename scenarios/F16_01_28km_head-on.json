@@ -1,0 +1,21 @@
+{
+  "scenario_id": "F16_01_28km_head-on",
+  "description": "F-16 Fighting Falcon approaching head-on from 28km",
+  "random_seed": 42,
+  "radar": {
+    "position": [0, 0, 0]
+  },
+  "threat": {
+    "profile": "F-16 Fighting Falcon",
+    "inject_at_time": 0.0,
+    "initial_position": [28000, 2000, 3500],
+    "velocity": [-350, 50, -20]
+  },
+  "fire_control": {
+    "mode": "automatic"
+  },
+  "simulation": {
+    "max_duration": 150.0,
+    "dt": 0.1
+  }
+}
