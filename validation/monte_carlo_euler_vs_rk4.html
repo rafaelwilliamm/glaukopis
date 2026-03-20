@@ -7796,7 +7796,7 @@ a.anchor-link {
 <!-- End of mermaid configuration --></head>
 <body class="jp-Notebook" data-jp-theme-light="true" data-jp-theme-name="JupyterLab Light">
 <main>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=4b6e5822">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=b07d9af2">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7806,13 +7806,14 @@ a.anchor-link {
 <h2 id="1.-Theory:-Euler-Method">1. Theory: Euler Method<a class="anchor-link" href="#1.-Theory:-Euler-Method">¶</a></h2><p>The Euler method is a 1st-order approximation for integrating ordinary differential equations. In the context of kinematics:
 $ v(t + \Delta t) = v(t) + a(t) \Delta t $
 $ x(t + \Delta t) = x(t) + v(t) \Delta t $</p>
+<p><strong>Implementation Note:</strong> The Euler integrator in this notebook is the semi-implicit Euler (Symplectic Euler), where the position is updated using the already updated velocity from the same time step. This variant is inherently more stable than the exact explicit Euler, making the Euler results presented here conservative — meaning the real divergence between pure explicit Euler and RK4 would be even slightly larger than observed.</p>
 <p><strong>Problem:</strong> Euler suffers from truncation errors that grow as the simulation advances. In the final stage of interception, where intense maneuvers (high G-forces) occur within a fraction of a second, small positional lags result in unrealistic <em>miss distances</em>, causing interceptors to miss consistently.</p>
 <h2 id="2.-Theory:-4th-Order-Runge-Kutta-(RK4)">2. Theory: 4th-Order Runge-Kutta (RK4)<a class="anchor-link" href="#2.-Theory:-4th-Order-Runge-Kutta-(RK4)">¶</a></h2><p>The RK4 method is a 4th-order approximation that calculates four slopes ($k_1, k_2, k_3, k_4$) over a single time step ($\Delta t$) and computes a weighted average.
 This drastically reduces the propagation error $O(\Delta t^4)$, ensuring that spatial physics—especially during final high-acceleration pursuits just before the proximity fuze miss distance calculation—remains extremely accurate and free from spurious numerical oscillations.</p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=71001ee5">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=c02b05c0">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7839,7 +7840,7 @@ This drastically reduces the propagation error $O(\Delta t^4)$, ensuring that sp
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=69aa71db">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=1f3adbab">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7852,7 +7853,7 @@ This drastically reduces the propagation error $O(\Delta t^4)$, ensuring that sp
 
 <span class="c1"># Define the Euler method (semi-implicit for slightly better stability)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">euler_integration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""Basic Euler integrator"""</span>
+<span class="w">    </span><span class="sd">"""Symplectic Euler integrator"""</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">vel</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">accel</span> <span class="o">*</span> <span class="n">dt</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">pos</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">vel</span> <span class="o">*</span> <span class="n">dt</span>
 
@@ -7866,7 +7867,7 @@ This drastically reduces the propagation error $O(\Delta t^4)$, ensuring that sp
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=e799dbf9">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=3b047ab8">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7958,7 +7959,7 @@ This drastically reduces the propagation error $O(\Delta t^4)$, ensuring that sp
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=fc7f6ea6">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=76189f2c">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7969,6 +7970,9 @@ This drastically reduces the propagation error $O(\Delta t^4)$, ensuring that sp
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Analyzing interception results (Miss Distance)</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
 
+<span class="c1"># Ensure figures output directory exists for IEEE formatting</span>
+<span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="s1">'../docs/figures'</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
 <span class="n">sns</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df_all</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">"scenario"</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">"miss_distance_m"</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s2">"integrator"</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">"Miss Distance Comparison: Euler vs RK4 (200 seeds)"</span><span class="p">)</span>
@@ -7977,6 +7981,9 @@ This drastically reduces the propagation error $O(\Delta t^4)$, ensuring that sp
 <span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'r'</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">'--'</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'Detonation Radius (15m)'</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+
+<span class="c1"># Exporting figure in 300 DPI (High Resolution for Publication)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">'../docs/figures/euler_vs_rk4_boxplot.png'</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s1">'tight'</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 
 <span class="c1"># Interception Success Rate (Hits)</span>
@@ -8064,16 +8071,56 @@ Interception Success Rate (% HIT):
 </div>
 </div>
 </div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=4101104d">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=4241c0b2">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [5]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Formal statistical testing (Mann-Whitney U, non-parametric)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy</span><span class="w"> </span><span class="kn">import</span> <span class="n">stats</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Statistical Significance Test (Mann-Whitney U):"</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">scenario</span> <span class="ow">in</span> <span class="n">SCENARIOS</span><span class="p">:</span>
+    <span class="n">euler_miss</span> <span class="o">=</span> <span class="n">df_all</span><span class="p">[(</span><span class="n">df_all</span><span class="o">.</span><span class="n">scenario</span><span class="o">==</span><span class="n">scenario</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">df_all</span><span class="o">.</span><span class="n">integrator</span><span class="o">==</span><span class="s1">'Euler'</span><span class="p">)][</span><span class="s1">'miss_distance_m'</span><span class="p">]</span>
+    <span class="n">rk4_miss</span>   <span class="o">=</span> <span class="n">df_all</span><span class="p">[(</span><span class="n">df_all</span><span class="o">.</span><span class="n">scenario</span><span class="o">==</span><span class="n">scenario</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">df_all</span><span class="o">.</span><span class="n">integrator</span><span class="o">==</span><span class="s1">'RK4'</span><span class="p">)][</span><span class="s1">'miss_distance_m'</span><span class="p">]</span>
+    
+    <span class="n">stat</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">mannwhitneyu</span><span class="p">(</span><span class="n">euler_miss</span><span class="p">,</span> <span class="n">rk4_miss</span><span class="p">,</span> <span class="n">alternative</span><span class="o">=</span><span class="s1">'two-sided'</span><span class="p">)</span>
+    <span class="n">sig_text</span> <span class="o">=</span> <span class="s1">'significant'</span> <span class="k">if</span> <span class="n">p</span> <span class="o">&lt;=</span> <span class="mf">0.05</span> <span class="k">else</span> <span class="s1">'not significant'</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">scenario</span><span class="si">}</span><span class="s2">: Mann-Whitney U stat=</span><span class="si">{</span><span class="n">stat</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">, p=</span><span class="si">{</span><span class="n">p</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">sig_text</span><span class="si">}</span><span class="s2">)"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>Statistical Significance Test (Mann-Whitney U):
+SU27_01_43km_head-on: Mann-Whitney U stat=19968.0, p=0.9783 (not significant)
+F16_01_28km_head-on: Mann-Whitney U stat=19847.5, p=0.8954 (not significant)
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=14ee3698">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Conclusions-and-Technical-Analysis">Conclusions and Technical Analysis<a class="anchor-link" href="#Conclusions-and-Technical-Analysis">¶</a></h2><p>The results of the Monte Carlo simulation (200 realizations per scenario for each integrator) demonstrate that replacing the first-order Euler integrator with the fourth-order RK4 produced <strong>no statistically significant improvement in the interception probability</strong> ($P_b$). The interception success rate remained critically low (0.5% – 2.5%) for both integration schemes.</p>
+<h2 id="Conclusions-and-Technical-Analysis">Conclusions and Technical Analysis<a class="anchor-link" href="#Conclusions-and-Technical-Analysis">¶</a></h2><p>The results of the Monte Carlo simulation (200 realizations per scenario for each integrator) demonstrate that replacing the first-order Euler integrator with the fourth-order RK4 produced <strong>no statistically significant improvement in the interception probability</strong> ($P_b$), nor statistically distinguishable miss distance distributions (Mann-Whitney U, $p &gt; 0.05$). The interception success rate remained critically low (0.5% – 2.5%) for both integration schemes.</p>
 <h3 id="What-does-this-mean?">What does this mean?<a class="anchor-link" href="#What-does-this-mean?">¶</a></h3><p>This outcome is arguably more interesting than if RK4 had significantly improved $P_b$. It formally demonstrates that in systems where the performance bottleneck is terminal guidance dynamics rather than integration precision, the choice of the numerical scheme has a secondary impact.</p>
 <p>By quantifying the effect of the integrator, we have shown that the positional truncation error of Euler (which operates on an $O(\Delta t^2)$ scale) is negligible compared to the massive miss distances (median ~55 m) observed. These large miss distances are induced by the inherent limitations of the interceptor—specifically, its constant-velocity approach (lack of sustained longitudinal propulsion) and the rigid limits of its True Proportional Navigation (TPN, $N=3$) law against high-speed, maneuvering targets at long ranges.</p>
+<p>This finding is consistent with the theoretical analysis of integration error propagation in missile guidance simulations (Zarchan, 2012).</p>
 <h3 id="Summary">Summary<a class="anchor-link" href="#Summary">¶</a></h3><p>The performance bottleneck resides in the interceptor's propulsion and engagement geometry logic, not in the kinematic integration scheme.</p>
 </div>
 </div>

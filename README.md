@@ -116,6 +116,11 @@ The radar maintains a smoothed track estimate using a first-order Alpha-Beta fil
 | **PAK FA / Su-57** | 0.01 m² | 18,000 m | ❌ Hostile |
 | **F-35 / F-22 Stealth** | 0.001 m² | 6,000 m | ❌ Hostile |
 | **Bird (Large)** | 0.005 m² | 5,000 m | ✅ Friendly |
+---
+
+## Validation Experiments
+
+For reproducible Jupyter notebooks documenting key design decisions and scientific validation — including the Euler vs RK4 kinematic integrator comparison (200 Monte Carlo seeds) — see the [`validation/`](./validation/) directory.
 
 ---
 
