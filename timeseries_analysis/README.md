@@ -23,9 +23,13 @@ O foco pedagógico destes documentos é usar a física e a eletrônica emuladas 
 
 ## 📂 Arquivos no Diretório
 
-* `Analise_Introdutoria_Series_Temporais_Radar.ipynb` — O Jupyter Notebook didático detalhando passo a passo toda a demonstração com plots visuais e explicações descritivas. *Recomendado abrir este primeiro.*
-* `time_series_plot.png` — Uma compilação de rápido acesso da plotagem renderizada na simulação atual.
+### Notebooks
+* `Analise_Introdutoria_Series_Temporais_Radar.ipynb` — **Capítulo 1**: Notebook introdutório detalhando passo a passo a demonstração com plots visuais e explicações descritivas. *Recomendado abrir este primeiro.*
+* `Cap2_Graficos_Series_Temporais_Radar.ipynb` — **Capítulo 2**: Gráficos de Séries Temporais (FPP3 §2.2–§2.9). 13 gráficos cobrindo time plots, scatterplots, lag plots, autocorrelação (ACF) e ruído branco, aplicados ao dataset radar.
+
+### Dados e Scripts
 * `timeseries_seed_101.csv` — O banco de dados em si! Uma única thread (Seed 101) extraída frame a frame ($0.1s$) dos cálculos matriciais com a telemetria integral dos módulos físicos para sua importação PANDAS.
+* `time_series_plot.png` — Uma compilação de rápido acesso da plotagem renderizada na simulação atual.
 * `run_mc_single_seed.py` — Script responsável por conectar-se ao compilador numérico do simulador (BatchRunner backend), isolar uma seed (ex. 101) e extrair os dados formatados perfeitamente para CSV. 
 * `visualize_dataset.py` — Script autônomo baseado em matplotlib sem depender do jupyter para re-renderizar a plotagem `time_series_plot.png`.
 
@@ -42,5 +46,6 @@ python timeseries_analysis/run_mc_single_seed.py
 python timeseries_analysis/visualize_dataset.py
 ```
 
-3. Abra via extensão Jupyter no VSCode ou Browser o notebook:
-👉 `timeseries_analysis/Analise_Introdutoria_Series_Temporais_Radar.ipynb`
+3. Abra os notebooks via extensão Jupyter no VSCode ou Browser:
+   - 👉 Cap. 1: `Analise_Introdutoria_Series_Temporais_Radar.ipynb`
+   - 👉 Cap. 2: `Cap2_Graficos_Series_Temporais_Radar.ipynb`
