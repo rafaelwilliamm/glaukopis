@@ -24,8 +24,9 @@ O foco pedagógico destes documentos é usar a física e a eletrônica emuladas 
 ## 📂 Arquivos no Diretório
 
 ### Notebooks
-* `Analise_Introdutoria_Series_Temporais_Radar.ipynb` — **Capítulo 1**: Notebook introdutório detalhando passo a passo a demonstração com plots visuais e explicações descritivas. *Recomendado abrir este primeiro.*
+* `Cap1_Analise_Introdutoria_Series_Temporais_Radar.ipynb` — **Capítulo 1**: Notebook introdutório detalhando passo a passo a demonstração com plots visuais e explicações descritivas. *Recomendado abrir este primeiro.*
 * `Cap2_Graficos_Series_Temporais_Radar.ipynb` — **Capítulo 2**: Gráficos de Séries Temporais (FPP3 §2.2–§2.9). 13 gráficos cobrindo time plots, scatterplots, lag plots, autocorrelação (ACF) e ruído branco, aplicados ao dataset radar.
+* `Cap3_Decomposicao_Series_Temporais_Radar.ipynb` — **Capítulo 3**: Decomposição de Séries Temporais (FPP3 §3.1–§3.6). Transformações Box-Cox, médias móveis (SMA/WMA/2×m-MA), decomposição clássica aditiva e decomposição STL robusta, aplicadas ao SNR, RCS, g_force e miss_distance.
 
 ### Dados e Scripts
 * `timeseries_seed_101.csv` — O banco de dados em si! Uma única thread (Seed 101) extraída frame a frame ($0.1s$) dos cálculos matriciais com a telemetria integral dos módulos físicos para sua importação PANDAS.
@@ -47,5 +48,6 @@ python timeseries_analysis/visualize_dataset.py
 ```
 
 3. Abra os notebooks via extensão Jupyter no VSCode ou Browser:
-   - 👉 Cap. 1: `Analise_Introdutoria_Series_Temporais_Radar.ipynb`
+   - 👉 Cap. 1: `Cap1_Analise_Introdutoria_Series_Temporais_Radar.ipynb`
    - 👉 Cap. 2: `Cap2_Graficos_Series_Temporais_Radar.ipynb`
+   - 👉 Cap. 3: `Cap3_Decomposicao_Series_Temporais_Radar.ipynb`

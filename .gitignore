@@ -58,3 +58,8 @@ backend/telemetry_export/
 results/
 temp/
 verify_ranges.py
+
+# Deerflow
+deer-flow/
+config.yaml
+.env
